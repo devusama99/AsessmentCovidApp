@@ -21,19 +21,26 @@ export default function SelectCountry({ change, submit }) {
 
   return (
     <div>
-      <TextField
-        variant="outlined"
-        label={"Country Name"}
-        onChange={handleChange}
-        style={{ minWidth: "200px" }}
-      />
-      <Button
-        variant="contained"
-        style={{ height: 55, transform: "translateX(-10px)" }}
-        onClick={handleSubmit}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
       >
-        Search
-      </Button>
+        <TextField
+          variant="outlined"
+          label={"Country Name"}
+          onChange={handleChange}
+          style={{ minWidth: "200px" }}
+        />
+        <Button
+          variant="contained"
+          style={{ height: 55, transform: "translateX(-10px)" }}
+          onClick={handleSubmit}
+        >
+          Search
+        </Button>
+      </form>
     </div>
   );
 }
