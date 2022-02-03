@@ -52,7 +52,12 @@ function FiguresCard({ label, data, icon, primaryColor, secondaryColor }) {
           className={classes.cardFigure}
         >
           {data ? (
-            <CountUp end={Number(data)} duration={1} separator="," />
+            <CountUp
+              end={Number(data)}
+              duration={1.5}
+              separator=","
+              useEasing={true}
+            />
           ) : (
             <CircularProgress className={classes.CircularProgress} />
           )}
