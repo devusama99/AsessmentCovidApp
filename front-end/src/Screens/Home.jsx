@@ -64,9 +64,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   mostAffectedCountriesHeading: {
-    fontWeight: "bold",
+    fontWeight: "bold !important",
     textAlign: "center",
-    marginBottom: theme.spacing(2),
+    marginBottom: `${theme.spacing(2)} !important`,
     [theme.breakpoints.up("md")]: {
       fontSize: "14px",
     },

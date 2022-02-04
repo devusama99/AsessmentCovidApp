@@ -15,6 +15,8 @@ import { FiHome, FiMap } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import { Link } from "react-router-dom";
+import Logo from "../Assests/logosvg.svg";
+import { Typography } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
   Link: {
@@ -30,6 +32,22 @@ const useStyles = makeStyles((theme) => ({
   },
   activeColor: {
     color: theme.palette.light.main,
+  },
+  drawer: {
+    position: "relative",
+  },
+  appBranding: {
+    display: "flex",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
+    bottom: 35,
+  },
+  brandText: {
+    fontWeight: "bold !important",
+    marginLeft: `${theme.spacing(0.5)} !important`,
+    color: "red",
   },
 }));
 
@@ -101,7 +119,7 @@ export default function AppDrawer(props) {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={open} className={classes.drawer}>
         <div style={DrawerHeader}>
           <IconButton onClick={toggleDrawer}>
             {open === false ? <MenuIcon /> : <ChevronLeftIcon />}
@@ -162,6 +180,10 @@ export default function AppDrawer(props) {
           </Link>
           <Divider />
         </List>
+        <div className={classes.appBranding}>
+          <img src={Logo} alt={"logo"} width="30px" />
+          <Typography className={classes.brandText}>Covid App</Typography>
+        </div>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 6, pl: 1, pr: 1 }}>
         {props.children}
