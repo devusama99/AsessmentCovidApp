@@ -11,10 +11,29 @@ import { Menu as MenuIcon } from "@mui/icons-material";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import { FiHome, FiMap } from "react-icons/fi";
+import { useLocation } from "react-router-dom";
+import { makeStyles } from "@mui/styles";
+import { Link } from "react-router-dom";
 
+const useStyles = makeStyles((theme) => ({
+  Link: {
+    textDecoration: "none",
+    color: theme.palette.dark.main,
+  },
+  active: {
+    backgroundImage: `linear-gradient(45deg , ${theme.palette.primary.main},${theme.palette.secondary.main})`,
+  },
+  activeIcon: {
+    color: theme.palette.light.main,
+    fontSize: "22px",
+  },
+  activeColor: {
+    color: theme.palette.light.main,
+  },
+}));
+
+// Initialzing Drawer With
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -68,9 +87,16 @@ const mobile = window.innerWidth >= 700 ? false : true;
 export default function AppDrawer(props) {
   const [open, setOpen] = React.useState(!mobile);
 
+  // Drawer Toggle Function
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  // initalizing useHistory
+  const history = useLocation();
+
+  // Initialize styles
+  const classes = new useStyles();
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -83,27 +109,57 @@ export default function AppDrawer(props) {
         </div>
         <List>
           <Divider />
-          <ListItem button key={"home"}>
-            <ListItemIcon>
-              <FiHome
-                style={{
-                  fontSize: "22px",
-                }}
+          <Link to="/" className={classes.Link}>
+            <ListItem
+              button
+              key={"home"}
+              className={history.pathname === "/" ? classes.active : null}
+            >
+              <ListItemIcon>
+                <FiHome
+                  style={{
+                    fontSize: "22px",
+                  }}
+                  className={
+                    history.pathname === "/" ? classes.activeIcon : null
+                  }
+                />
+              </ListItemIcon>
+              <ListItemText
+                primary={"Home"}
+                className={
+                  history.pathname === "/" ? classes.activeColor : null
+                }
               />
-            </ListItemIcon>
-            <ListItemText primary={"Home"} />
-          </ListItem>
+            </ListItem>
+          </Link>
           <Divider />
-          <ListItem button key={"map"}>
-            <ListItemIcon>
-              <FiMap
-                style={{
-                  fontSize: "22px",
-                }}
+          <Link to="/heatMap" className={classes.Link}>
+            <ListItem
+              button
+              key={"map"}
+              className={
+                history.pathname === "/heatMap" ? classes.active : null
+              }
+            >
+              <ListItemIcon>
+                <FiMap
+                  style={{
+                    fontSize: "22px",
+                  }}
+                  className={
+                    history.pathname === "/heatMap" ? classes.activeIcon : null
+                  }
+                />
+              </ListItemIcon>
+              <ListItemText
+                primary={"Heat Map"}
+                className={
+                  history.pathname === "/heatMap" ? classes.activeColor : null
+                }
               />
-            </ListItemIcon>
-            <ListItemText primary={"Heat Map"} />
-          </ListItem>
+            </ListItem>
+          </Link>
           <Divider />
         </List>
       </Drawer>

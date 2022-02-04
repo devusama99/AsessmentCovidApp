@@ -44,7 +44,7 @@ function AffectedCountry({ countryName, countryCode, cases }) {
     <Card className={classes.card}>
       <img
         src={`https://flagcdn.com/${countryCode}.svg`}
-        alt="South Africa"
+        alt={countryName}
         className={classes.cardImg}
       />
       <div className={classes.cardContent}>

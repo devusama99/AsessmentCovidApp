@@ -2,9 +2,9 @@ import React from "react";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
-export default function CountryErr({ handle, openState }) {
+export default function ErrSnackbar({ handle, openState, msg }) {
   const { vertical, horizontal, open } = openState;
-
+  console.log(msg);
   return (
     <Snackbar
       anchorOrigin={{ vertical, horizontal }}
@@ -12,7 +12,7 @@ export default function CountryErr({ handle, openState }) {
       onClose={handle}
       key={vertical + horizontal}
     >
-      <Alert severity="error">Country Not Found!</Alert>
+      <Alert severity="error">{msg}</Alert>
     </Snackbar>
   );
 }

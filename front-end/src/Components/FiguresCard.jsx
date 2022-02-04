@@ -17,20 +17,20 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     paddingRight: theme.spacing(3),
     paddingLeft: theme.spacing(3),
-    color: theme.palette.light.main,
+    color: `${theme.palette.light.main} !important`,
   },
   cardIcon: {
     paddingRight: theme.spacing(3),
     fontSize: "42px",
-    color: theme.palette.light.main,
+    color: `${theme.palette.light.main} !important`,
   },
   cardFigure: {
-    fontWeight: "bold",
+    fontWeight: `bold !important`,
     fontSize: "24px",
   },
   CircularProgress: {
     margin: theme.spacing(1),
-    color: theme.palette.light.main,
+    color: `${theme.palette.light.main} !important`,
   },
 }));
 
@@ -51,6 +51,7 @@ function FiguresCard({ label, data, icon, primaryColor, secondaryColor }) {
           component={"h3"}
           className={classes.cardFigure}
         >
+          {/* Loader implemented */}
           {data ? (
             <CountUp
               end={Number(data)}

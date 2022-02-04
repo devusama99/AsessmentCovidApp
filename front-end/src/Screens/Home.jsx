@@ -11,7 +11,7 @@ import SelectCountry from "../Components/SelectCountry";
 import StatsContainerHead from "../Components/StatsContainerHead";
 import AffectedCountry from "../Components/AffectedCountry";
 import Graph from "../Components/Graph";
-import CountryErr from "../Components/CountryErr";
+import ErrSnackbar from "../Components/ErrSnackbar";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -77,6 +77,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Set Zoom to 80% on Mobile Screens
 const setZoom = () => {
   window.innerWidth <= 600
     ? (document.body.style.zoom = "80%")
@@ -92,35 +93,50 @@ function Home() {
     open: false,
     vertical: "bottom",
     horizontal: "center",
+    msg: "",
   });
+  function autoCloseSnack() {
+    // Callback of 3 sec to close SnackBar Err after 5 Seconds
+    setTimeout(() => {
+      setOpenSnackbar({ ...openSnackbar, open: false, msg: "" });
+    }, 5000);
+  }
 
+  // get Random 4 Countries as Most Affected from Countries Array
   const mostAfected = [];
   for (let i = 0; i < 4; i++) {
     const random = Math.floor(Math.random() * Countries.length);
     mostAfected.push(Countries[random]);
   }
+
+  // Function to Handle Snackbark Close
   const closeSnackBar = () => {
-    setOpenSnackbar({ ...openSnackbar, open: false });
+    setOpenSnackbar({ ...openSnackbar, open: false, msg: "" });
   };
 
+  // Function to set state as Data changes in iput Feild
   const handleChange = (data) => {
     setCountry(data);
   };
 
+  // Function to Search Slected Country data from Countries Array
   const searchCountryData = () => {
     const selectedCountryData = Countries.filter(
       (countryData) =>
         countryData.name.toLowerCase().trim() === country.toLowerCase().trim()
     );
+    // Show Err if selectedCountryData is empty
     selectedCountryData.length >= 1
       ? setCountryReport(selectedCountryData[0].lastWeeksCases)
-      : setOpenSnackbar({ ...openSnackbar, open: true });
-
-    setTimeout(() => {
-      setOpenSnackbar({ ...openSnackbar, open: false });
-    }, 3000);
+      : setOpenSnackbar({
+          ...openSnackbar,
+          open: true,
+          msg: "Country not found!",
+        });
+    autoCloseSnack();
   };
 
+  // Function to Call API on useEffect
   const getMainStats = () => {
     var options = {
       method: "GET",
@@ -138,9 +154,16 @@ function Home() {
       })
       .catch(function (error) {
         console.error(error);
+        setOpenSnackbar({
+          ...openSnackbar,
+          open: true,
+          msg: "Error Getting Data",
+        });
+        autoCloseSnack();
       });
   };
 
+  // Run Only Once When componenet Mount
   useEffect(() => {
     setZoom();
     getMainStats();
@@ -206,31 +229,16 @@ function Home() {
                   cases={country.lastWeeksCases[6]}
                 />
               ))}
-              {/* <AffectedCountry
-                countryName="Pakistan"
-                countryCode={"pk"}
-                cases={"200,124,456"}
-              />
-              <AffectedCountry
-                countryName="India"
-                countryCode={"in"}
-                cases={"200,124,456"}
-              />
-              <AffectedCountry
-                countryName="China"
-                countryCode={"cn"}
-                cases={"200,124,456"}
-              />
-              <AffectedCountry
-                countryName="Turkey"
-                countryCode={"tr"}
-                cases={"200,124,456"}
-            /> */}
             </div>
           </div>
         </div>
       </div>
-      <CountryErr openState={openSnackbar} handle={closeSnackBar} />
+      {/* Err Snackbar */}
+      <ErrSnackbar
+        openState={openSnackbar}
+        handle={closeSnackBar}
+        msg={openSnackbar.msg}
+      />
     </div>
   );
 }
