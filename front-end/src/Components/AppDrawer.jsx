@@ -18,6 +18,8 @@ import { Link } from "react-router-dom";
 import Logo from "../Assests/logosvg.svg";
 import { Typography } from "@mui/material";
 
+let DrawerOpen;
+
 const useStyles = makeStyles((theme) => ({
   Link: {
     textDecoration: "none",
@@ -37,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
   },
   appBranding: {
-    display: "flex",
+    display: DrawerOpen ? "flex" : "none",
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
@@ -47,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   brandText: {
     fontWeight: "bold !important",
     marginLeft: `${theme.spacing(0.5)} !important`,
-    color: "red",
+    color: theme.palette.primary.main,
   },
 }));
 
@@ -100,11 +102,12 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-const mobile = window.innerWidth >= 700 ? false : true;
+const mobile = window.innerWidth >= 900 ? false : true;
 
 export default function AppDrawer(props) {
   const [open, setOpen] = React.useState(!mobile);
 
+  DrawerOpen = open;
   // Drawer Toggle Function
   const toggleDrawer = () => {
     setOpen(!open);
@@ -180,7 +183,13 @@ export default function AppDrawer(props) {
           </Link>
           <Divider />
         </List>
-        <div className={classes.appBranding}>
+        <div
+          className={classes.appBranding}
+          style={{
+            opacity: !open ? "0" : "1",
+            transition: "0.2s all ease-in",
+          }}
+        >
           <img src={Logo} alt={"logo"} width="30px" />
           <Typography className={classes.brandText}>Covid App</Typography>
         </div>

@@ -4,7 +4,6 @@ import Alert from "@mui/material/Alert";
 
 export default function ErrSnackbar({ handle, openState, msg }) {
   const { vertical, horizontal, open } = openState;
-  console.log(msg);
   return (
     <Snackbar
       anchorOrigin={{ vertical, horizontal }}
@@ -12,7 +11,9 @@ export default function ErrSnackbar({ handle, openState, msg }) {
       onClose={handle}
       key={vertical + horizontal}
     >
-      <Alert severity="error">{msg}</Alert>
+      <Alert severity="error" variant={"filled"}>
+        {msg}
+      </Alert>
     </Snackbar>
   );
 }
