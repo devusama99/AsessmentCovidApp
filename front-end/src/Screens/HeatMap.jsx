@@ -1,12 +1,20 @@
 import React, { useState } from "react";
 import { makeStyles } from "@mui/styles";
-import { Button, CircularProgress, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Card,
+  CircularProgress,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Map from "../Components/Map";
 import io from "socket.io-client";
 import { useEffect } from "react";
 import axios from "axios";
 
 import { useForm } from "react-hook-form";
+import { height } from "@mui/system";
+import Legend from "../Components/Legend";
 
 const useStyles = makeStyles((theme) => ({
   pageHeading: {
@@ -43,6 +51,9 @@ const useStyles = makeStyles((theme) => ({
   formItem: {
     marginBottom: `${theme.spacing()} !important`,
     fontWeight: "bold !important",
+  },
+  legend: {
+    marginBottom: theme.spacing(5),
   },
 }));
 
@@ -114,6 +125,11 @@ export default function HeatMap() {
           {heatLayers ? <Map data={heatLayers} /> : <CircularProgress />}
         </div>
         <div className={[classes.width48, classes.formContainer].join(" ")}>
+          <div className={classes.legend}>
+            <Legend color={"red"} text={"Death Area"} />
+            <Legend color={"yellow"} text={"Affected Area"} />
+            <Legend color={"green"} text={"Recovered Area"} />
+          </div>
           <form
             noValidate
             onSubmit={handleSubmit((data) => {
