@@ -24,4 +24,4 @@ FRONTEND:
    
  BACKEND:
  1- REST API is created to get heatLayer data from server,
- 2- Socket is send, receiving and storing data in Array in relatime.
+ 2- Socket is sending, receiving and storing data in Array in realtime.
